@@ -47,7 +47,7 @@ public class GameThread extends Thread {
                 canvas=this.mSurfaceHolder.lockCanvas();
                 synchronized (mSurfaceHolder){
                     this.mGameSurfaceView.update();
-                    this.mGameSurfaceView.draw(canvas);
+                    this.mGameSurfaceView.drawSurface(canvas);
                 }
             }catch(Exception ex){
             }finally {
@@ -55,7 +55,7 @@ public class GameThread extends Thread {
                     try{
                         mSurfaceHolder.unlockCanvasAndPost(canvas);
                     }catch(Exception e){
-                        e.printStackTrace();
+                        Log.d(this.getClass().getSimpleName(),e.toString());
                     }
                 }
             }
@@ -69,7 +69,7 @@ public class GameThread extends Thread {
             totalTime+=System.nanoTime()-startTime;
             frameCount++;
             if(frameCount==FPS){
-                averageFPS =1000/(totalTime/frameCount/1000000);
+                averageFPS =1000/((totalTime/frameCount)/1000000);
                 frameCount=0;
                 totalTime=0;
                 Log.d(this.getClass().getSimpleName(), "FPS:" + averageFPS);
